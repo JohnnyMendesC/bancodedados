@@ -1,0 +1,70 @@
+/*DDL - DATA DEFINITION LANGUAGE:*/
+
+varchar(tamanhomaximodecaracteres) = cadeia (comlimitedecaracteresde0atéovalordefinido)
+ * text = cadeia (sem limites de caracteres)
+ * char = cadeia (tem que ser exatamente o numero de caracteres)
+ * int = inteiro
+ * numeric = real
+
+
+create table cliente (cpf varchar(11) primary key, nome varchar(60), telefone varchar(11), email varchar(50));
+						
+
+alter table cliente drop column email;
+alter table cliente add column email varchar(50);
+
+
+create table produto(codigo_produto serial primary key, descricao varchar(40) not null,
+preco numeric check (preco > 0), quantidade_estoque int default 0, obs text);
+
+
+
+/* DML - data MANIPULATION language */
+	
+values('fica em aspas simples,valor1,valor2')
+insert into produto (descricao, preco, quantidade_estoque) 
+					values('Geladeira',1500,10), ('Fogão',800,5);
+
+
+
+/* DQL - data QUERY language */
+
+select descricao, preco, quantidade_estoque, obs from produto p 
+
+para nao precisar digitar um por um como acima faz assim \/ 
+
+select * from produto p 
+
+insert into produto (descricao, preco, quantidade_estoque, obs) 
+		values('Forno Elétrico',700,2,'Forno da marca Philco'), 					('Cooktop',450,5,'Cooktop modelo sn234343');
+
+select * from produto p
+
+create table departamento(codigo_departamento serial primary key, nome varchar(30));
+
+drop table departamento
+
+
+create table departamento(codigo_departamento serial primary key, nome varchar(30)); 
+
+create table funcionario(codigo_funcionario serial primary key, nome varchar(50) not null,email varchar(50) not null unique, codigo_departamento int,
+foreign key (codigo_departamento) references departamento(codigo_departamento));
+
+insert into departamento (nome) values('DP'),('Compras'),('Financeiro');
+
+insert into funcionario(nome, email, codigo_departamento) values('Roni','r@gmail.com',1);
+
+select * from funcionario; 
+
+update departamento set nome = 'Departamento Pessoal' where codigo_departamento = 1 
+
+select * from departamento d order by codigo_departamento; 
+
+select * from funcionario f, departamento d
+where f.codigo_departamento = d.codigo_departamento
+
+delete from departamento where codigo_departamento = 2
+ 
+select * from departamento d where codigo_departamento = 3
+
+alter table produto add column nome varchar(40);

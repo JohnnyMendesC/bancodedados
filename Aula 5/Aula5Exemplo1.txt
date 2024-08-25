@@ -1,0 +1,12 @@
+
+Projeto
+[CODIGO_PROJETO,tipo_projeto,descricao_projeto]
+
+Funcionario
+[CODIGO_FUNCIONARIO,nome_funcionário,CODIGO_CARGO]
+
+Cargo
+[CODIGO_CARGO,nome_cargo,salario_cargo]
+
+Alocacao
+[codigo_projeto,código_funcionario,data_inicio_alocacao]

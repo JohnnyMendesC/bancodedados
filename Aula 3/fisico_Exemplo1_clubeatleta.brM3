@@ -1,0 +1,39 @@
+/* logico_Exemplo1_clubeatleta: */
+
+CREATE TABLE clube (
+    cnpj texto PRIMARY KEY,
+    nome texto
+);
+
+CREATE TABLE modalidade (
+    codigo_modalidade numerico PRIMARY KEY,
+    nome texto,
+    fk_clube_cnpj texto
+);
+
+CREATE TABLE atleta (
+    cpf texto PRIMARY KEY,
+    nome texto,
+    fk_modalidade_codigo_modalidade numerico,
+    fk_categoria_codigo_categoria numerico
+);
+
+CREATE TABLE categoria (
+    codigo_categoria numerico PRIMARY KEY,
+    descricao nome
+);
+ 
+ALTER TABLE modalidade ADD CONSTRAINT FK_modalidade_2
+    FOREIGN KEY (fk_clube_cnpj)
+    REFERENCES clube (cnpj)
+    ON DELETE RESTRICT;
+ 
+ALTER TABLE atleta ADD CONSTRAINT FK_atleta_2
+    FOREIGN KEY (fk_modalidade_codigo_modalidade)
+    REFERENCES modalidade (codigo_modalidade)
+    ON DELETE RESTRICT;
+ 
+ALTER TABLE atleta ADD CONSTRAINT FK_atleta_3
+    FOREIGN KEY (fk_categoria_codigo_categoria)
+    REFERENCES categoria (codigo_categoria)
+    ON DELETE RESTRICT;

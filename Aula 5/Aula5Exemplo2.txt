@@ -1,0 +1,17 @@
+Historico
+[matricula, codigo_disciplina, codigo_curso, nota1, nota2, situacao] media sai
+
+Aluno
+[matricula, nome_aluno]
+
+Professor
+[codigo_professor, nome_professor]
+
+Disciplina
+[codigo_disciplina, nome_disciplina, codigo_professor, numero_turma]
+
+Turma
+[numero_turma, nome_turma, turno, codigo_curso]
+
+Curso
+[codigo_curso, nome_curso]

@@ -1,0 +1,24 @@
+cliente
+cpf	-	nome	-	email
+123	-	Roni	-	r@com
+321	-	Ana	-	a@com
+234	-	Carla	-	c@com
+432	-	Maria	-	m@com
+
+produto
+codigo	-	descricao
+12	-	celular
+33	-	TV
+44	-	geladeira
+55	-	fogão
+
+pedido
+numero	-	data	-	status		-	cpf(FK)	
+1111	-	20-08	-	aguardando pgt	-	321	
+2222	-	19-08	-	enviado		-	432
+
+carrinho
+numeropedido	-	codigoproduto	-	quantidade	-	valor venda
+1111		-	33		-	1		-	1000
+1111		-	55		-	1		-	800
+2222		-	33		-	2		-	2000

@@ -1,0 +1,14 @@
+medico
+crm123 - Fulano - Cirurgiao Geral
+
+consulta(relação)
+(\/ ex nº da consulta)
+123456- cpf321 - crm123data - 19-08-2024 - 21:15 - 100
+
+123457- cpf654 - crm123data - 19-08-2024 - 21:30 - 100
+
+123458- ...
+
+
+paciente
+cpf321 - Ciclano

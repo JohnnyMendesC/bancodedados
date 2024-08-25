@@ -1,0 +1,135 @@
+create database atividadefinalbd
+
+CREATE TABLE produto (
+    codigo_produto serial PRIMARY KEY,
+    nome varchar,
+    descricao varchar,
+    categoria_produto varchar,
+    estoque numeric,
+    valor unitário numeric
+);
+
+CREATE TABLE cliente (
+    codigo_cliente serial PRIMARY KEY,
+    nome_completo varchar,
+    e_mail varchar,
+    cpf varchar,
+    data_nascimento date,
+    endereco varchar
+);
+
+CREATE TABLE pedido (
+    data_pedido date,
+    responsavel_pedido varchar,
+    numero_pedido serial PRIMARY KEY
+);
+
+CREATE TABLE funcionario (
+    nome_funcionario varchar,
+    codigo_funcionario serial PRIMARY KEY,
+    cpf varchar
+);
+
+
+CREATE TABLE _cadastro_funcionario_produto_cliente_pedido (
+    fk_funcionario_codigo_funcionario serial,
+    fk_produto_codigo_produto serial,
+    fk_cliente_codigo_cliente serial,
+    fk_pedido_numero_pedido serial
+);
+
+CREATE TABLE faz (
+    fk_pedido_numero_pedido serial,
+    fk_cliente_codigo_cliente serial
+);
+ALTER TABLE _cadastro_funcionario_produto_cliente_pedido ADD CONSTRAINT FK__cadastro_funcionario_produto_cliente_pedido_1
+    FOREIGN KEY (fk_funcionario_codigo_funcionario)
+    REFERENCES funcionario (codigo_funcionario);
+
+ALTER TABLE _cadastro_funcionario_produto_cliente_pedido ADD CONSTRAINT FK__cadastro_funcionario_produto_cliente_pedido_2
+    FOREIGN KEY (fk_produto_codigo_produto)
+    REFERENCES produto (codigo_produto);
+ ALTER TABLE _cadastro_funcionario_produto_cliente_pedido ADD CONSTRAINT FK__cadastro_funcionario_produto_cliente_pedido_3
+    FOREIGN KEY (fk_cliente_codigo_cliente)
+    REFERENCES cliente (codigo_cliente);
+
+ALTER TABLE _cadastro_funcionario_produto_cliente_pedido ADD CONSTRAINT FK__cadastro_funcionario_produto_cliente_pedido_4
+    FOREIGN KEY (fk_pedido_numero_pedido)
+    REFERENCES pedido (numero_pedido);
+
+
+ALTER TABLE _cadastro_funcionario_produto_cliente_pedido ADD CONSTRAINT FK__cadastro_funcionario_produto_cliente_pedido_4
+    FOREIGN KEY (fk_pedido_numero_pedido)
+    REFERENCES pedido (numero_pedido);
+
+
+ALTER TABLE faz ADD CONSTRAINT FK_faz_1
+    FOREIGN KEY (fk_pedido_numero_pedido)
+    REFERENCES pedido (numero_pedido)
+    ON DELETE SET NULL;
+ 
+ALTER TABLE faz ADD CONSTRAINT FK_faz_2
+    FOREIGN KEY (fk_cliente_codigo_cliente)
+    REFERENCES cliente (codigo_cliente)
+    ON DELETE SET NULL;
+
+INSERT INTO produto (nome, descricao, categoria_produto, estoque, valor_unitario)
+VALUES
+('Café Premium', 'Café arábica gourmet, 100% natural, 500g', 'Alimentos e Bebidas', 250, 35.90),
+('Teclado Mecânico RGB', 'Teclado mecânico com iluminação RGB, switches azuis', 'Eletrônicos', 150, 299.99),
+('Livro Python para Iniciantes', 'Guia completo para aprender programação em Python', 'Livros', 100, 89.90),
+('Smartphone X300', 'Smartphone de última geração com 128GB de memória', 'Eletrônicos', 75, 2199.00),
+('Cadeira Gamer', 'Cadeira ergonômica com suporte lombar e ajuste de altura', 'Móveis', 50, 499.99),
+('Fone de Ouvido Bluetooth', 'Fone de ouvido sem fio com cancelamento de ruído', 'Eletrônicos', 200, 199.99),
+('Garrafa Térmica 1L', 'Garrafa térmica em aço inox, 1 litro', 'Utilidades Domésticas', 300, 79.90),
+('Tênis de Corrida Pro', 'Tênis leve e confortável, ideal para maratonas', 'Moda e Acessórios', 120, 249.90),
+('Monitor 27" 4K', 'Monitor LED de 27 polegadas com resolução 4K UHD', 'Eletrônicos', 40, 1499.00),
+('Mochila Executiva', 'Mochila com compartimento para laptop e vários bolsos', 'Moda e Acessórios', 180, 159.90);
+
+
+
+INSERT INTO cliente (nome_completo, e_mail, cpf, data_nascimento, endereco)
+VALUES
+('Maria Clara Silva', 'maria.silva@example.com', '123.456.789-01', '1985-05-12', 'Rua das Flores, 123, São Paulo, SP'),
+('João Pedro Oliveira', 'joao.oliveira@example.com', '987.654.321-00', '1990-07-23', 'Avenida Central, 456, Rio de Janeiro, RJ'),
+('Ana Beatriz Souza', 'ana.souza@example.com', '111.222.333-44', '1992-09-10', 'Rua do Sol, 789, Belo Horizonte, MG'),
+('Carlos Eduardo Lima', 'carlos.lima@example.com', '555.666.777-88', '1980-03-15', 'Avenida das Palmeiras, 321, Curitiba, PR'),
+('Juliana Pereira Santos', 'juliana.santos@example.com', '999.888.777-66', '1995-11-30', 'Rua das Acácias, 654, Porto Alegre, RS'),
+('Fernanda Alves Costa', 'fernanda.costa@example.com', '444.333.222-11', '1988-02-27', 'Avenida Brasil, 987, Brasília, DF'),
+('Ricardo Martins Ferreira', 'ricardo.ferreira@example.com', '777.888.999-00', '1979-06-05', 'Rua das Palmeiras, 159, Fortaleza, CE'),
+('Larissa Mendes Rocha', 'larissa.rocha@example.com', '123.987.654-32', '1993-12-17', 'Avenida Atlântica, 753, Salvador, BA'),
+('Thiago Henrique Azevedo', 'thiago.azevedo@example.com', '321.654.987-78', '1987-04-20', 'Rua da Praia, 852, Recife, PE'),
+('Camila Barbosa Lima', 'camila.lima@example.com', '456.789.123-09', '1991-10-05', 'Avenida dos Pássaros, 951, Florianópolis, SC');
+
+
+INSERT INTO pedido (data_pedido, responsavel_pedido)
+VALUES
+('2024-08-01', 'Maria Clara Silva'),
+('2024-08-02', 'João Pedro Oliveira'),
+('2024-08-03', 'Ana Beatriz Souza'),
+('2024-08-04', 'Carlos Eduardo Lima'),
+('2024-08-05', 'Juliana Pereira Santos'),
+('2024-08-06', 'Fernanda Alves Costa'),
+('2024-08-07', 'Ricardo Martins Ferreira'),
+('2024-08-08', 'Larissa Mendes Rocha'),
+('2024-08-09', 'Thiago Henrique Azevedo'),
+('2024-08-10', 'Camila Barbosa Lima');
+
+
+CREATE TABLE pedido_cliente (
+    id serial PRIMARY KEY,
+    codigo_cliente integer REFERENCES cliente(codigo_cliente),
+    numero_pedido integer REFERENCES pedido(numero_pedido)
+);
+
+CREATE TABLE pedido_produto (
+    id serial PRIMARY KEY,
+    numero_pedido integer REFERENCES pedido(numero_pedido),
+    codigo_produto integer REFERENCES produto(codigo_produto),
+    quantidade numeric
+);
+
+UPDATE produto
+SET estoque = produto.estoque - pedido_produto.quantidade
+FROM pedido_produto
+WHERE produto.codigo_produto = pedido_produto.codigo_produto;

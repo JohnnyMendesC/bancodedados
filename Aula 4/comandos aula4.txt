@@ -1,0 +1,111 @@
+
+COMANDOS SELECT:
+select * from produto where preco between 2.5 and 5 /* produtos entre 2.5 e 5 
+
+select * from produto where preco > 8 /* os que preco maior que 8
+select * from produto where NOT preco > 8 /* os que preco não maior que 8
+
+select * from produto where preco in (2.5, 7.5, 8.5) /*os que estão dentro desses valores
+select * from produto where preco NOT in (2.5, 7.5, 8.5)
+
+select * from produto where nome like 'A%' /*produtos que começam com A
+select * from produto where nome like '%o' /*produtos que terminam com o
+select * from produto where nome like '%Leite%' /*produtos com palavra leite em algum lugar dela 
+-a maioria dos bancos é case sensitve
+-like se usa charactere
+
+select * from produto where nome ilike '%leite%'
+insensitive like acha independente de case sensitive
+ 
+select count (*) from produto where nome ilike '%leite%' /* lista os 2 produtos
+select count (*) from produto /* lista todos produtos da table
+
+select max (preco) from produto /*maior preco da coluna (preco) da table produto
+select min (preco) from produto /*menor preco
+select avg (preco) from produto /*mostra a media dos precos
+select round(avg (preco),2) from produto /*arredonda para 2 casas decimais
+select round(avg (preco),2) as media_preco from produto /*o nome da coluna vira media_preco
+
+select sum (quantidade_estoque) from produto /* somatorio da coluna quantidade_estoque
+
+select nome, sum (quantidade_estoque) from produto p 
+group by nome order by nome /*agrupa as informaçõe de quantidade_estoque por nome, 
+arrozcomarroz, feijaocom feijao e mostra o total
+
+select nome, count(nome) as total from produto
+group by nome
+HAVING COUNT(nome) >= 2
+order by total
+/*having é um comando importante
+
+select nome, sum(quantidade_estoque) as total from produto
+group by nome
+having SUM(quantidade_estoque) > 50
+order by nome
+
+select nome, count(quantidade_estoque) as total from produto
+group by nome
+having sum(quantidade_estoque) > 50 and nome = 'Feijão' order by total
+
+
+INNER e LEFT
+/*select * from categoria c, produto p  order by p.nome
+assim ele retorna o valor errado, sem interseccionar*/
+
+select * from produto p
+inner join categoria c
+on p.codigo_categoria = c.codigo_categoria order by p.nome /*retorna todas linhas onde o codigo p e c são iguais, com excessão de NULL
+
+select * from produto p
+left join categoria c
+on p.codigo_categoria = c.codigo_categoria order by p.nome /*retorna todas linhas da tabela a esquerda, até mesmo NULL
+
+select * from produto p where codigo_categoria is null /*lista todos nulls
+
+select * from produto p
+right join categoria c
+on p.codigo_categoria = c.codigo_categoria order by p.nome /*right usa pouco, ele lista tudo até mesmo os null da direita, tipo o categoria perfumaria e eletronico que não tem nenhum registro
+
+select * from produto p
+full join categoria c
+on p.codigo_categoria = c.codigo_categoria order by p.nome /* mostra tudo
+
+select a.nome, t.nome from atleta a
+inner join time t on a.codigo_time = t.codigo_time 
+/*selecionar atleta e time 
+puxando codigo do time = codigo do time e 
+mostrar nome e time
+
+select a.nome, t.nome from atleta a, time t
+where a.codigo_time = t.codigo_time 
+
+COMANDO ENUM
+create type enum_estado_civil as enum (
+'CASADO(A)','SOLTEIRO(A)', 'DIVORCIADO(A)', 'VIÚVO(A)'
+)
+
+create table cliente (codigo_cliente serial primary key,
+nome varchar(50), telefone varchar(11), 
+estado_civil enum_estado_civil;
+)
+
+insert into cliente(nome,telefone,estado_civil)
+values('Maria','2224335','CASADO(A)'),('André','22242335','SOLTEIRO(A)')
+
+
+INSERINDO DUAS FOREIGN KEYS DE UMA VEZ
+create table emprestimo (codigo_emprestimo serial primary key,
+	valor numeric, taxa numeric, numero_parcelas smallint,
+	codigo_cliente int, codigo_banco int,
+	foreign key (codigo_cliente) references cliente (codigo_cliente),
+	foreign key (codigo_banco) references banco (codigo_banco));
+
+/*para selecionar clientes que fizeram emprestimo*/
+select c.nome from cliente c
+inner join emprestimo e on
+c.codigo_cliente = e.codigo_cliente 
+
+/*para filtrar quais bancos tem emprestico mostrando seus nome e quantos emprestimos no total*/
+select b.nome, count(e.codigo_emprestimo) as total from banco b
+inner join emprestimo e on b.codigo_banco = e.codigo_banco 
+group by b.nome ;

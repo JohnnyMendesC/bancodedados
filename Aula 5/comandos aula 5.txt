@@ -1,0 +1,72 @@
+usar o delete cascade no autor
+
+create table conta(numero_conta int primary key, titular varchar(40), saldo numeric, limite numeric, cnpj char(14), foreign key(cnpj) references banco (cnpj) on delete cascade);
+
+comandos aula 5
+
+Você
+18:44
+Projeto
+[CODIGO_PROJETO,tipo_projeto,descricao_projeto]
+
+Funcionario
+[CODIGO_FUNCIONARIO,nome_funcionário,CODIGO_CARGO]
+
+Cargo
+[CODIGO_CARGO,nome_cargo,salario_cargo]
+
+Alocacao
+[codigo_projeto,código_funcionario,data_inicio_alocacao]
+Isabella Assumpção
+18:50
+historico:
+matricula, cod prof, cod disciplina, cod curso, turno
+Dênni JS
+18:52
+Historico    Matric
+Nome Aluno    Nota 1   Nota 2   
+Media    Situação
+
+
+Cod. Prof    Nome Prof 
+
+
+Cod. Discip  Nome Discip
+
+
+Cod Curso  Nome Curso
+
+
+Turma  Numero  Nome   Turno
+Dênni JS
+18:53
+Exceto Media
+Dênni JS
+19:02
+Qual o melhor ou mais facil de aprendizado?
+Roni Schanuel
+19:05
+create table banco(cnpj char(14) primary key, nome varchar(30), razao_social varchar(30));
+Roni Schanuel
+19:07
+insert into banco (cnpj, nome, razao_social) values ('12345678901234','Bradesco','Bradesco S/A'),('12345678901235','Itaú','Itaú S/A');
+Roni Schanuel
+19:14
+create table conta(numero_conta int primary key, titular varchar(40), saldo numeric, limite numeric, cnpj char(14), foreign key(cnpj) references banco (cnpj) on delete cascade on update cascade);
+Roni Schanuel
+19:22
+insert into conta(numero_conta,titular,saldo,limite,cnpj) values(123,'Ana',1000,2000,'12345678901234');
+insert into conta(numero_conta,titular,saldo,limite,cnpj) values(1234,'Marcos',3000,5000,'123456789012
+35');
+Roni Schanuel
+19:24
+update banco set cnpj='12345678901236' where cnpj='12345678901234';
+Roni Schanuel
+19:27
+delete from banco where cnpj = '12345678901236';
+Roni Schanuel
+19:34
+insert into conta(numero_conta,titular,saldo,limite,cnpj) values(321,'Maria',8000,5000,'12345678901235');
+Roni Schanuel
+19:48
+BEGIN; update conta set saldo = saldo - 1000 where numero_conta = 1234; update conta set saldo = saldo + 1000 where numero_conta=321; COMMIT;
