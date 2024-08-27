@@ -1,0 +1,33 @@
+create table clientepj(id serial primary key,
+nome varchar(60), email varchar(50), telefone varchar(11),
+endereco varchar(200), cnpj varchar(14));
+
+insert into clientepj (nome, email,telefone,endereco,cnpj) 
+values ('Mariana', 'm@gmail.com', '234243', 'Rua do Imperador 23','123456');
+
+insert into clientepj (nome, email,telefone,endereco,cnpj) 
+values ('Adriano', 'a@gmail.com', '234223', 'Rua do Imperador 33','223456');
+
+insert into clientepj (nome, email,telefone,endereco,cnpj) 
+values ('Cliente1731', 'a@gmail.com', '234223', 'Rua do Imperador 33','23456');
+
+/*union mostra todos para o filtro de cima e os de baixo*/
+select cpj.nome from clientepj cpj
+union
+select c.nome from cliente c where c.nome like '%Cliente173169%';
+
+/*intersect só mostra os que tem em comum de um na outra*/
+select cpj.nome from clientepj cpj
+intersect
+select c.nome from cliente c;
+
+/*todos que tem na cpj e não tem na cliente*/
+select cpj.nome from clientepj cpj
+except
+select c.nome from cliente c;
+
+
+
+
+
+

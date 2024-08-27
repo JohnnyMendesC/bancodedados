@@ -1,0 +1,31 @@
+create table cliente(id serial primary key,
+nome varchar(60), email varchar(50), telefone varchar(11),
+endereco varchar(200));
+
+create or replace function inserir_registros(num_registros integer)
+returns void as
+$$
+declare /*declare é para criar uma variavel(tipo no portugol)*/
+i integer:= 1; /*:= é atribuir*/
+begin 
+	while i <= num_registros loop
+		insert into cliente(nome,email,telefone,endereco)
+		values('Cliente'||i, 'cliente'||i||'@exemplo.com','(XX)XXXX'||i,'Endereço'||i);
+		i:=i+1;
+	end loop;
+	
+end;
+$$ language plpgsql;
+
+select inserir_registros(259000);
+
+select * from cliente;
+
+/*consulta sem indice Planning Time: 0.102 ms|Execution Time: 135.886 ms*/
+explain analyse select from cliente where nome like 'Cliente 28%'; 
+
+/*criação do indice*/
+create index idx_nome on cliente using BTREE(nome); /*btree é o algoritmo de pesquisa em arvore que funciona melhor para nome/caracteres*/
+
+/*consulta com indice Planning Time: 1.189 ms|Execution Time: 73.739 ms*/
+explain analyse select from cliente where nome like 'Cliente 28%';

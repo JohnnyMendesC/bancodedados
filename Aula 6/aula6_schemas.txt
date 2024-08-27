@@ -1,0 +1,9 @@
+create schema producao;
+
+create table producao.marca(id_marca serial primary key,
+descricao varchar(30));
+
+create schema adm;
+
+create table adm.setor(id_setor serial primary key,
+nome varchar(30));
